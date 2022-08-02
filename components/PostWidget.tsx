@@ -9,20 +9,24 @@ const PostWidget = ({ categories, slug }) => {
 
   useEffect(() => {
     if (slug) {
-      getSimilarPosts(categories, slug).then((result) =>
-        setRelatedPosts(result)
-      );
+      getSimilarPosts(categories, slug).then((result) => {
+        setRelatedPosts(result);
+      });
     } else {
-      getRecentPosts().then((result) => setRelatedPosts(result));
+      getRecentPosts().then((result) => {
+        setRelatedPosts(result);
+      });
     }
   }, [slug]);
+
+  console.log(relatedPosts);
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
       <h3 className="text-xl mb-8 font-semibold border-b pb-4">
         {slug ? "Related Posts" : "Recent Posts"}
       </h3>
-      {relatedPosts.map((post) => (
+      {relatedPosts?.map((post) => (
         <div key={post.title} className="flex items-center w-full mb-4">
           <div className="w-16 flex-none">
             <img
@@ -35,9 +39,13 @@ const PostWidget = ({ categories, slug }) => {
           </div>
           <div className="flex-grow ml-4 ">
             <p className="text-gray-500 font-xs">
-              {moment(post.createdAt).format('MMM DD,YYYY')}
+              {moment(post.createdAt).format("MMM DD,YYYY")}
             </p>
-            <Link href={`/posts/${post.slug}`} key={post.title} className="text-md">
+            <Link
+              href={`/posts/${post.slug}`}
+              key={post.title}
+              className="text-md"
+            >
               {post.title}
             </Link>
           </div>
